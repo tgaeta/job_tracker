@@ -1,3 +1,6 @@
+require "will_paginate/view_helpers/action_view"
+require "will_paginate/view_helpers/link_renderer"
+
 class CustomPaginationRenderer < WillPaginate::ActionView::LinkRenderer
   def to_html
     html = pagination.map do |item|
