@@ -1,0 +1,9 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-4">
+    <h2 class="text-2xl font-semibold text-gray-700">New Job Application</h2>
+  </div>
+  <%= turbo_frame_tag "new_job_application" do %>
+    <%= render 'form', job_application: @job_application %>
+  <% end %>
+  <%= link_to 'Back to Job Applications', job_applications_path, class: 'mt-4 inline-block text-blue-500 hover:text-blue-700' %>
+</div>

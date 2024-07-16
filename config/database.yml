@@ -8,10 +8,10 @@ default: &default
   timeout: 5000
 development:
   <<: *default
-  database: shore_development
+  database: job_tracker_development
 test:
   <<: *default
-  database: shore_test
+  database: job_tracker_test
 production:
   <<: *default
-  database: shore_production
+  database: job_tracker_production

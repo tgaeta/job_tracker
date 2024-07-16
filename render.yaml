@@ -1,7 +1,7 @@
 databases:
   - name: database
     databaseName: database
-    user: shore
+    user: job_tracker
     plan: starter
 
 services:

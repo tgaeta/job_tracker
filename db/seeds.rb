@@ -1,9 +1,19 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require "faker"
+
+JobApplication.destroy_all
+50.times do
+  method_of_contact = %w[email internet_job_application recruiter].sample
+  email_address = (method_of_contact == "email") ? Faker::Internet.email : nil
+  website_link = (method_of_contact == "internet_job_application") ? Faker::Internet.url : nil
+
+  JobApplication.create!(
+    date_applied: Faker::Date.backward(days: 30),
+    company_name: Faker::Company.name,
+    method_of_contact: method_of_contact,
+    email_address: email_address,
+    point_of_contact: Faker::Name.name,
+    position_type: %w[full_time part_time internship].sample,
+    position_title: Faker::Job.title,
+    website_link: website_link
+  )
+end

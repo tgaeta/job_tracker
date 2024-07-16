@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for?(:title) ? strip_tags(yield(:title)) : "Shore" %></title>
-    <meta name="apple-mobile-web-app-title" content="Shore">
+    <title><%= content_for?(:title) ? strip_tags(yield(:title)) : "Job Tracker" %></title>
+    <meta name="apple-mobile-web-app-title" content="Job Tracker">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,7 +10,10 @@
     <%= vite_javascript_tag "application" %>
     <%= vite_stylesheet_tag "application", data: {"turbo-track": "reload"} %>
   </head>
-  <body>
-    <%= yield %>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <%= render 'flash_messages' %>
+      <%= yield %>
+    </div>
   </body>
 </html>

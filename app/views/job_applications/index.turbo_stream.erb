@@ -1,0 +1,12 @@
+<%= turbo_stream.update "flash_messages" do %>
+  <%= render 'flash_messages' %>
+<% end %>
+<%= turbo_stream.update "job_applications" do %>
+  <%= render "job_applications_table", job_applications: @job_applications %>
+<% end %>
+<%= turbo_stream.update "pagination" do %>
+  <%= render "pagination", job_applications: @job_applications, job_application_count: @job_application_count %>
+<% end %>
+<%= turbo_stream.update "job_application_count" do %>
+  <%= @job_application_count %>
+<% end %>

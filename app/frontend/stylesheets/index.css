@@ -3,3 +3,24 @@
 @import "tailwindcss/utilities";
 
 @import "base";
+
+.pagination a {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  background-color: white;
+}
+
+.pagination a:hover {
+  background-color: #f9fafb;
+}
+
+body {
+  background-image: url('../images/background-pattern.webp');
+  background-repeat: repeat;
+  background-position: center;
+  background-attachment: fixed;
+}

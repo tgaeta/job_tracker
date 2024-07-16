@@ -1,0 +1,34 @@
+<tr id="<%= dom_id(job_application) %>">
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.date_applied.strftime('%m/%d/%Y') %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.company_name %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.position_title %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.position_type.humanize %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.method_of_contact.humanize %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.point_of_contact || '-' %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.email_address.present? ? job_application.email_address : '-' %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <% if job_application.website_link.present? %>
+      <%= link_to 'Visit', job_application.website_link, target: "_blank", class: "px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50", title: "Visit Website" %>
+    <% end %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <div class="flex justify-start items-center">
+      <%= link_to 'Edit', edit_job_application_path(job_application), class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 mr-2', data: { turbo_frame: "_top" }, title: "Edit Application" %>
+      <%= button_to 'Delete', job_application_path(job_application), method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50', data: { turbo_frame: "_top" }, title: "Delete Application" %>
+    </div>
+  </td>
+</tr>

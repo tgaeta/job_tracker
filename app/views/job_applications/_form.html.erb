@@ -1,0 +1,51 @@
+<%= turbo_frame_tag dom_id(job_application) do %>
+  <%= form_with(model: job_application, local: false) do |form| %>
+    <% if job_application.errors.any? %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Error:</strong>
+        <span class="block sm:inline"><%= pluralize(job_application.errors.count, "error") %> prohibited this job application from being saved:</span>
+        <ul class="list-disc list-inside">
+          <% job_application.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="mb-4">
+      <%= form.label :date_applied, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.date_field :date_applied, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :company_name, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :company_name, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :method_of_contact, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.select :method_of_contact, JobApplication.method_of_contacts.keys.map { |k| [k.humanize, k] }, { include_blank: 'Select a method' }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :email_address, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.email_field :email_address, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :point_of_contact, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :point_of_contact, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :website_link, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.url_field :website_link, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :position_type, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.select :position_type, JobApplication.position_types.keys.map { |k| [k.humanize, k] }, { include_blank: 'Select a type' }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="mb-6">
+      <%= form.label :position_title, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :position_title, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+    <div class="flex items-center justify-between">
+      <%= form.submit class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
+      <%= link_to 'Back', root_path, class: 'inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800' %>
+    </div>
+  <% end %>
+<% end %>

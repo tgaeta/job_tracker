@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Shore
+module JobTracker
   class Application < Rails::Application
     config.autoload_paths << "#{root}/app/views"
     config.autoload_paths << "#{root}/app/views/layouts"
@@ -27,7 +27,7 @@ module Shore
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = "America/Los_Angeles"
+    config.time_zone = "America/New_York"
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.

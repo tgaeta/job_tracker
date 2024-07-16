@@ -7,7 +7,7 @@ volumes:
 services:
   db:
     image: postgres:16.3
-    container_name: shore_db
+    container_name: job_tracker_db
     networks:
       - development
     environment:
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile.dev
     networks:
       - development
-    container_name: shore_app
+    container_name: job_tracker_app
     stdin_open: true
     tty: true
     entrypoint: docker-entrypoint.sh
@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile.dev
     networks:
       - development
-    container_name: shore_worker
+    container_name: job_tracker_worker
     environment:
       - RAILS_ENV=development
       - RACK_ENV=development
@@ -68,7 +68,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: shore_vite
+    container_name: job_tracker_vite
     networks:
       - development
     environment:

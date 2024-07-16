@@ -1,44 +1,53 @@
 <h1 align="left">
   <a href="#">
-    <img src="https://github.com/yatish27/shore/assets/1014383/fbad8ed2-9510-4693-a342-4bafa515b164" width="128px"/>
+    <img src="https://github.com/user-attachments/assets/c5840b5d-efc9-4644-95ff-ac94c546a5d8" width="128px"/>
   </a>
 
-  Shore
+  Job Tracker
 
   <p align="left">
-    <a href="https://github.com/yatish27/shore/actions">
-      <img alt="Build Status" src="https://github.com/yatish27/shore/actions/workflows/ci.yml/badge.svg"/>
+    <a href="https://github.com/tgaeta/job_tracker/actions">
+      <img alt="Build Status" src="https://github.com/tgaeta/job_tracker/actions/workflows/ci.yml/badge.svg"/>
     </a>
-    <a href="https://github.com/yatish27/shore/blob/master/LICENSE.txt">
+    <a href="https://github.com/tgaeta/job_tracker/blob/master/LICENSE.txt">
       <img alt="License" src="https://img.shields.io/badge/license-MIT-428F7E.svg"/>
     </a>
-    <a href="https://codeclimate.com/github/yatish27/shore/maintainability"><img src="https://api.codeclimate.com/v1/badges/1cd4e3f1c0a4c5af29b1/maintainability" /></a>
+    <a href="https://codeclimate.com/github/tgaeta/job_tracker/maintainability"><img src="https://api.codeclimate.com/v1/badges/1cd4e3f1c0a4c5af29b1/maintainability" /></a>
   </p>
 </h1>
 
 ## Introduction 📜
 
-Shore is a Ruby on Rails template with modern stack to start your new project.
+Job Tracker is a simple, powerful, and user-friendly web application designed to help job seekers efficiently manage their job search process. Built with Ruby on Rails and enhanced with modern web technologies, this tool streamlines the often overwhelming task of tracking multiple job applications.
 
-## Features ⚡️
+<img alt="UI Screenshot" src="https://github.com/user-attachments/assets/1b4ec900-a670-4220-bf01-1df1cfba5914"/>
 
-- **Ruby**: Ruby 3.3.1 
-- **Rails**: [Rails 7.1](https://rubyonrails.org)
-- **PostgreSQL**: [PostgresSQL 16.3](https://www.postgresql.org)
-- **Tailwind CSS**: Uses [Tailwind CSS](https://tailwindcss.com) for styling.
-- **Vite Ruby**: Uses [Vite Ruby](https://vite-ruby.netlify.app) for asset management. It is based on [Vite.js](https://vitejs.dev). It replaces webpacker, jsbundling-rails, cssbundling-rails, importmaps and sprockets/propshaft.
-- **Bun**: Uses [Bun](https://bun.sh/) as package manager. It replaces Node and Yarn.
-- **Phlex**: Uses [Phlex](https://www.phlex.fun) for component-based views. It is an alternative to [ViewComponent](https://viewcomponent.org).
-- **Solid Queue**: Uses [Solid Queue](https://github.com/rails/solid_queue) for background processing.
-- **Minitest/FactoryBot**: Uses Rails' default testing library, minitest along with [Factorybot](https://github.com/thoughtbot/factory_bot).
-- **Rubocop**: Auto-formats Ruby code with [rubocop](https://rubocop.org).
-- **Prettier**: Auto-formats JavaScript and CSS code with [prettier](https://prettier.io).
-- **Github Actions**: Uses Github Actions for continuous integration and deployment.
-- **Deployment**: Supports deployment on [Heroku](https://www.heroku.com/platform) and [Render](https://render.com)
+## Key Features
 
+- **Intuitive Interface**: Easy-to-use dashboard for quick overview of all job applications.
+- **Detailed Tracking**: Record essential information for each application, including:
+  - Applied
+  - Company
+  - Position
+  - Postion Type (Full-time, Part-time, Internship)
+  - Contact Method
+  - Point of Contact (P.o.C.)
+  - Email
+  - Website
+- **Dynamic Filtering**: Quickly find specific applications using search and filter options.
+- **Real-time Updates**: Leveraging Hotwire for seamless, dynamic content updates without full page reloads.
+- **Responsive Design**: Fully functional on both desktop and mobile devices.
+
+## Technical Stack
+
+- **Backend**: Ruby on Rails 7
+- **Frontend**:
+  - Tailwind CSS for styling
+  - Hotwire (Turbo and Stimulus) for dynamic interactions
+  - Vite for modern JavaScript bundling
+- **Database**: PostgreSQL
 
 ## Getting Started 🚀
-
 
 ### System Requirements
 You will need the following to run the application.
@@ -49,28 +58,6 @@ You will need the following to run the application.
 
 Refer [here](./docs/installing_prerequisites.md) to install these dependencies
 
-### Initial setup
-- Shore is a preconfigured base Ruby on Rails application. You can clone this repository and add it to your repo.
-  ```bash
-  git clone git@github.com:yatish27/shore.git your_new_project_name
-  cd your_new_project_name
-  ```
-
-- The application's default name is Shore. You can rename it to your desired new name. The name should be in camelcase.
-
-  ```bash
-  ./bin/rename_project YourNewProjectName
-  ```
-
-- Copy the `env.sample` to `.env`
-
-  - The default username and password for database is set to `postgres` and `password`. You can override them in `.env` file.
-
-- Run `bin/setup` to set up the application. It prepares the database and installs the required ruby gems and javascript packages. The script is idempotent, so you can run it multiple times.
-
-  ```bash
-  ./bin/setup
-  ```
 
 ### Running the application
 
@@ -84,15 +71,23 @@ This runs overmind or foreman using the Procfile.dev. It starts the rails server
 
 Visit `http://localhost:3000` to see the home page 🚀.
 
-### Running locally with docker 
-Shore supports docker and docker compose for local development.
+## Seed Data
+
+To help you get started and test the application's features, I've included a seed file that generates 50 sample job applications. This data is designed to simulate a realistic job search scenario.
+
+```bash
+rails db:seed
+```
+
+### Running locally with docker
+Job Tracker supports docker and docker compose for local development.
 Install Docker and Docker desktop,
 
 Once you have cloned the repository and have Docker installed, follow the following steps
 
 - Run `docker compose build` to build. It will build the necessary images.
 - Run `docker-compose run --rm web bin/setup` to create and set up the database.
-- Run `docker compose up` to start the application. 
+- Run `docker compose up` to start the application.
 Since the local code from your host machine is mounted in the docker container, any change made locally will be directly reflected. You don't need to rebuild the container.
 
 ## Deployment 📦
@@ -105,13 +100,28 @@ Running all tests
 ./bin/rails test:all
 ```
 
-Running a single test
-```
-./bin/rails test test/jobs/hello_world_job_test.rb
-```
-
 ## License 🔑
-Shore is released under the [MIT License](./LICENSE.txt).
+JobTracker is released under the [MIT License](./LICENSE.txt).
+
 
 ## Contributing 🤝
-PRs are welcome
+
+**Contributions Welcome:** I'm open to contributions! If you'd like to help improve this project:
+
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Make your changes and commit them with clear, descriptive messages
+4. Push your changes to your fork
+5. Create a pull request with a detailed description of your changes
+
+I appreciate all contributions, big or small. Let's build something great together! 🚀
+
+🚧 **Note:** This project is currently under active development and is very much a work in progress. Features may change.
+
+## Acknowledgements
+
+This project was built upon the foundation provided by [Shore](https://github.com/yatish27/shore), a Ruby on Rails template with a modern stack for starting new projects. I express my gratitude to the Shore project for providing an excellent starting point.
+
+> Shore is a Ruby on Rails template with modern stack to start your new project.
+
+I highly recommend checking out the Shore project for anyone looking to kickstart their Ruby on Rails development with a modern, well-structured template.

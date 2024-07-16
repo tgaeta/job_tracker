@@ -1,0 +1,10 @@
+<%= turbo_stream.prepend "job_applications", @job_application %>
+<%= turbo_stream.update "new_job_application" do %>
+  <%= render "form", job_application: JobApplication.new %>
+<% end %>
+<%= turbo_stream.update "flash_messages" do %>
+  <%= render "flash_messages", flash: { notice: 'Job application was successfully created.' } %>
+<% end %>
+<%= turbo_stream.update "job_application_count" do %>
+  <%= JobApplication.count %>
+<% end %>
