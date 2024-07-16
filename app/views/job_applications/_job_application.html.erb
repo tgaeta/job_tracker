@@ -26,14 +26,14 @@
           safe_url(job_application.website_link),
           target: "_blank",
           rel: "noopener noreferrer",
-          class: "px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50",
+          class: "px-3 py-1 rounded-md text-xs text-gray-700 bg-white border border-gray-300 hover:bg-gray-50",
           title: "Visit Website" %>
     <% end %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <div class="flex justify-start items-center">
-      <%= link_to 'Edit', edit_job_application_path(job_application), class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 mr-2', data: { turbo_frame: "_top" }, title: "Edit Application" %>
-      <%= button_to 'Delete', job_application_path(job_application), method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50', data: { turbo_frame: "_top" }, title: "Delete Application" %>
+      <%= link_to 'Edit', edit_job_application_path(job_application), class: 'px-3 py-1 rounded-md text-xs text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 mr-2', data: { turbo_frame: "_top" }, title: "Edit Application" %>
+      <%= button_to 'Delete', job_application_path(job_application), method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: 'px-3 py-1 rounded-md text-xs text-gray-700 bg-white border border-gray-300 hover:bg-gray-50', data: { turbo_frame: "_top" }, title: "Delete Application" %>
     </div>
   </td>
 </tr>
