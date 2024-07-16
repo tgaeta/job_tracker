@@ -4,7 +4,7 @@ class JobApplicationsController < ApplicationController
   def index
     @job_applications = filter_and_sort_job_applications
     @job_application_count = @job_applications.count
-    @job_applications = @job_applications.paginate(page: params[:page], per_page: 10)
+    @job_applications = @job_applications.paginate(page: params[:page], per_page: 10).order(created_at: :desc)
 
     @pagination_info = {
       current_page: @job_applications.current_page,
@@ -29,10 +29,9 @@ class JobApplicationsController < ApplicationController
   end
 
   def edit
-    @job_application = JobApplication.find_by(id: params[:id])
-    if @job_application.nil?
-      Rails.logger.error "Job Application with id #{params[:id]} not found"
-      redirect_to root_path, alert: "Job Application not found"
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}) }
     end
   end
 
@@ -104,6 +103,8 @@ class JobApplicationsController < ApplicationController
 
   def set_job_application
     @job_application = JobApplication.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Job application not found."
   end
 
   def job_application_params
