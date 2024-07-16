@@ -22,12 +22,12 @@ module ApplicationHelper
 
   def safe_url(url)
     uri = URI.parse(url)
-    if uri.scheme && !["http", "https"].include?(uri.scheme)
-      "#"  # or some default safe URL
+    if uri.scheme && ["http", "https"].exclude?(uri.scheme)
+      "#"
     else
       url
     end
   rescue URI::InvalidURIError
-    "#"  # or some default safe URL
+    "#"
   end
 end
