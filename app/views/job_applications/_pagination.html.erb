@@ -1,18 +1,18 @@
-<% if @job_applications.total_pages > 1 %>
+<% if @pagination_info[:total_pages] > 1 %>
   <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     <div class="text-sm text-gray-700">
-      Showing <span class="font-medium"><%= @job_applications.offset + 1 %></span> to <span class="font-medium"><%= [@job_applications.offset + @job_applications.length, @job_application_count].min %></span> of <span class="font-medium"><%= @job_application_count %></span> results
+      Showing <span class="font-medium"><%= @pagination_info[:offset] + 1 %></span> to <span class="font-medium"><%= [@pagination_info[:offset] + @pagination_info[:length], @job_application_count].min %></span> of <span class="font-medium"><%= @job_application_count %></span> results
     </div>
     <div>
       <%= will_paginate @job_applications,
-                        renderer: CustomPaginationRenderer,
-                        previous_label: 'Previous',
-                        next_label: 'Next',
-                        inner_window: 0,
-                        outer_window: 0,
-                        class: 'pagination',
-                        previous_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50',
-                        next_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50' %>
+                              renderer: CustomPaginationRenderer,
+                              previous_label: 'Previous',
+                              next_label: 'Next',
+                              inner_window: 0,
+                              outer_window: 0,
+                              class: 'pagination',
+                              previous_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50',
+                              next_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50' %>
     </div>
   </div>
 <% end %>

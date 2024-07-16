@@ -22,7 +22,12 @@
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <% if job_application.website_link.present? %>
-      <%= link_to 'Visit', job_application.website_link, target: "_blank", class: "px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50", title: "Visit Website" %>
+      <%= link_to 'Visit',
+          safe_url(job_application.website_link),
+          target: "_blank",
+          rel: "noopener noreferrer",
+          class: "px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50",
+          title: "Visit Website" %>
     <% end %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

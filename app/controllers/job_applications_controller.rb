@@ -2,29 +2,17 @@ class JobApplicationsController < ApplicationController
   before_action :set_job_application, only: [:create, :update, :destroy]
 
   def index
-    @job_applications = JobApplication.all
-
-    if params[:search].present?
-      @job_applications = @job_applications.where("company_name ILIKE ? OR position_title ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
-    end
-
-    if params[:method_of_contact].present?
-      @job_applications = @job_applications.where(method_of_contact: params[:method_of_contact])
-    end
-
-    if params[:position_type].present?
-      @job_applications = @job_applications.where(position_type: params[:position_type])
-    end
-
+    @job_applications = filter_and_sort_job_applications
     @job_application_count = @job_applications.count
-
-    @job_applications = if params[:sort].present? && params[:direction].present?
-      @job_applications.order(params[:sort] => params[:direction])
-    else
-      @job_applications.order(date_applied: :desc)
-    end
-
     @job_applications = @job_applications.paginate(page: params[:page], per_page: 10)
+
+    @pagination_info = {
+      current_page: @job_applications.current_page,
+      total_pages: @job_applications.total_pages,
+      offset: @job_applications.offset,
+      length: @job_applications.length,
+      total_entries: @job_applications.total_entries
+    }
 
     respond_to do |format|
       format.html
@@ -98,5 +86,25 @@ class JobApplicationsController < ApplicationController
 
   def job_application_params
     params.require(:job_application).permit(:date_applied, :company_name, :method_of_contact, :email_address, :point_of_contact, :website_link, :position_type, :position_title)
+  end
+
+  def filter_and_sort_job_applications
+    job_applications = JobApplication.all
+
+    job_applications = job_applications.search(params[:search]) if params[:search].present?
+    job_applications = job_applications.by_method_of_contact(params[:method_of_contact]) if params[:method_of_contact].present?
+    job_applications = job_applications.by_position_type(params[:position_type]) if params[:position_type].present?
+
+    sort_column = sort_column(params[:sort])
+    sort_direction = sort_direction(params[:direction])
+    job_applications.order(sort_column => sort_direction)
+  end
+
+  def sort_column(column)
+    %w[date_applied company_name position_title].include?(column) ? column : "date_applied"
+  end
+
+  def sort_direction(direction)
+    %w[asc desc].include?(direction) ? direction : "desc"
   end
 end

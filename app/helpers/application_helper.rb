@@ -10,12 +10,24 @@ module ApplicationHelper
   end
 
   def sort_link_to(name, column)
-    direction = (column.to_s == params[:sort] && params[:direction] == 'asc') ? 'desc' : 'asc'
-    link_to name, { sort: column, direction: direction },
-            class: 'text-gray-600 hover:text-gray-900',
-            data: {
-              turbo_frame: 'job_applications_table',
-              turbo_action: 'replace'
-            }
+    direction = (column.to_s == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
+    link_to name,
+      request.params.merge(sort: column, direction: direction),
+      class: "text-gray-600 hover:text-gray-900",
+      data: {
+        turbo_frame: "job_applications_table",
+        turbo_action: "replace"
+      }
+  end
+
+  def safe_url(url)
+    uri = URI.parse(url)
+    if uri.scheme && !["http", "https"].include?(uri.scheme)
+      "#"  # or some default safe URL
+    else
+      url
+    end
+  rescue URI::InvalidURIError
+    "#"  # or some default safe URL
   end
 end

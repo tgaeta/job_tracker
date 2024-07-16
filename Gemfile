@@ -14,7 +14,8 @@ gem "tzinfo-data", "~> 1.2024", ">= 1.2024.1", platforms: %i[windows jruby]
 gem "vite_rails", "~> 3.0", ">= 3.0.17"
 gem "phlex-rails", "~> 1.2"
 gem "devise", "~> 4.9"
-gem 'will_paginate', '~> 4.0'
+gem "will_paginate", "~> 4.0"
+gem "validate_url", "~> 1.0"
 
 group :development, :test do
   gem "debug", "~> 1.9", ">= 1.9.2", platforms: %i[mri windows]

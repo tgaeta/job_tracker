@@ -35,9 +35,9 @@
     </div>
   <% end %>
   <%= turbo_frame_tag "job_applications_table" do %>
-    <%= render "job_applications_table", job_applications: @job_applications %>
+    <%= render partial: "job_applications_table", locals: { job_applications: @job_applications } %>
     <div id="pagination" class="mt-4">
-      <%= render "pagination", job_applications: @job_applications, job_application_count: @job_application_count %>
+      <%= render partial: "pagination", locals: { job_applications: @job_applications, job_application_count: @job_application_count } %>
     </div>
   <% end %>
   <%= turbo_frame_tag "new_job_application" %>

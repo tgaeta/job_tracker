@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'job_applications#index'
+  root "job_applications#index"
   resources :job_applications
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
