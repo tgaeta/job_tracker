@@ -1,5 +1,5 @@
 class JobApplicationsController < ApplicationController
-  before_action :set_job_application, only: [:create, :update, :destroy]
+  before_action :set_job_application, only: [:edit, :update, :destroy]
 
   def index
     @job_applications = filter_and_sort_job_applications
@@ -22,6 +22,18 @@ class JobApplicationsController < ApplicationController
 
   def new
     @job_application = JobApplication.new
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: @job_application, title: "New"}) }
+    end
+  end
+
+  def edit
+    @job_application = JobApplication.find_by(id: params[:id])
+    if @job_application.nil?
+      Rails.logger.error "Job Application with id #{params[:id]} not found"
+      redirect_to root_path, alert: "Job Application not found"
+    end
   end
 
   def create
@@ -29,18 +41,23 @@ class JobApplicationsController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to job_applications_path, notice: "Job application was successfully created." }
+        format.html { redirect_to root_path, notice: "Job application was successfully created." }
         format.turbo_stream {
           flash.now[:notice] = "Job application was successfully created."
           render turbo_stream: [
             turbo_stream.prepend("job_applications", partial: "job_application", locals: {job_application: @job_application}),
-            turbo_stream.update("flash_messages", partial: "flash_messages"),
-            turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: JobApplication.new})
+            turbo_stream.update("job_application_count", JobApplication.count),
+            turbo_stream.update("flash_messages", partial: "flash_messages")
           ]
         }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@job_application, partial: "form", locals: {job_application: @job_application}) }
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: @job_application, title: "New"}),
+            turbo_stream.update("flash_messages", partial: "flash_messages")
+          ]
+        }
       end
     end
   end
@@ -48,7 +65,7 @@ class JobApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        format.html { redirect_to job_applications_path, notice: "Job application was successfully updated." }
+        format.html { redirect_to root_path, notice: "Job application was successfully updated." }
         format.turbo_stream {
           flash.now[:notice] = "Job application was successfully updated."
           render turbo_stream: [
@@ -58,7 +75,12 @@ class JobApplicationsController < ApplicationController
         }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@job_application, partial: "form", locals: {job_application: @job_application}) }
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}),
+            turbo_stream.update("flash_messages", partial: "flash_messages")
+          ]
+        }
       end
     end
   end
@@ -66,7 +88,7 @@ class JobApplicationsController < ApplicationController
   def destroy
     @job_application.destroy
     respond_to do |format|
-      format.html { redirect_to job_applications_url, notice: "Job application was successfully deleted." }
+      format.html { redirect_to root_path, notice: "Job application was successfully deleted." }
       format.turbo_stream {
         flash.now[:notice] = "Job application was successfully deleted."
         render turbo_stream: [

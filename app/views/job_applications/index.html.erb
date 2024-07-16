@@ -1,36 +1,36 @@
-<div class="container mx-auto px-4 py-8">
-  <%= turbo_frame_tag "flash_messages" do %>
-    <%= render 'flash_messages' %>
-  <% end %>
+<div class="my-2 md:my-8">
   <div class="mb-8 flex justify-between items-center">
     <h2 class="hidden md:block md:text-2xl font-semibold text-gray-700 shadow-2xl">
       Job Tracker
     </h2>
-    <%= link_to 'Add New Job Application', new_job_application_path, class: 'text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
+    <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
   </div>
   <%= form_with url: job_applications_path, method: :get, data: { controller: "job-filter", turbo_frame: "job_applications_table" } do |form| %>
     <div class="flex flex-wrap -mx-2 mb-4">
       <div class="w-full md:w-1/4 px-2 mb-4 md:mb-0">
+        <%= form.label :search, "Search", class: "sr-only" %>
         <%= form.text_field :search, value: params[:search], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Search by company or position", data: { action: "input->job-filter#submit" } %>
       </div>
       <div class="w-full md:w-1/4 px-2 mb-4 md:mb-0">
+        <%= form.label :method_of_contact, "Contact Method", class: "sr-only" %>
         <%= form.select :method_of_contact,
-          options_for_select([["All Contact Methods", ""]] + JobApplication.method_of_contacts.map { |k, v| [k.humanize, v] }, params[:method_of_contact]),
-          {},
-          class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-          data: { action: "change->job-filter#submit" }
-        %>
+    options_for_select([["All Contact Methods", ""]] + JobApplication.method_of_contacts.map { |k, v| [k.humanize, v] }, params[:method_of_contact]),
+    {},
+    class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+    data: { action: "change->job-filter#submit" }
+  %>
       </div>
       <div class="w-full md:w-1/4 px-2">
+        <%= form.label :position_type, "Position Type", class: "sr-only" %>
         <%= form.select :position_type,
-          options_for_select([["All Position Types", ""]] + JobApplication.position_types.map { |k, v| [k.humanize, v] }, params[:position_type]),
-          {},
-          class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-          data: { action: "change->job-filter#submit" }
-        %>
+    options_for_select([["All Position Types", ""]] + JobApplication.position_types.map { |k, v| [k.humanize, v] }, params[:position_type]),
+    {},
+    class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+    data: { action: "change->job-filter#submit" }
+  %>
       </div>
       <div class="w-full md:w-1/4 px-2 mt-4 md:mt-0">
-        <%= form.button "Reset Filters", type: "button", class: "w-full bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer", data: { action: "click->job-filter#reset" } %>
+        <%= form.button "Reset Filters", type: "button", class: "w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer", data: { action: "click->job-filter#reset" } %>
       </div>
     </div>
   <% end %>
