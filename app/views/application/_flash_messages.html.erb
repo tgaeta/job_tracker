@@ -1,6 +1,36 @@
-<div data-controller="flash-message" class="hidden">
+<style>
+  @keyframes flash-progress {
+    from {
+      width: 100%;
+      left: 0;
+    }
+    to {
+      width: 0;
+      left: 0;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .flash-progress-bar {
+    animation: flash-progress 2s linear forwards;
+  }
+
+  .flash-message.fade-out {
+    animation: fade-out 0.5s forwards;
+  }
+</style>
+<div data-controller="flash-message" class="hidden relative">
   <% flash.each do |type, message| %>
-    <div class="<%= flash_class(type) %>" role="alert">
+    <div class="<%= flash_class(type) %> flash-message relative" role="alert">
+      <div class="flash-progress-bar absolute top-0 left-0 h-1 w-full <%= progress_bar_class(type) %>"></div>
       <%= message %>
     </div>
   <% end %>

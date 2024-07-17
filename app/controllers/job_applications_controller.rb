@@ -1,5 +1,6 @@
 class JobApplicationsController < ApplicationController
-  before_action :set_job_application, only: [:create, :update, :destroy]
+  include ActionView::RecordIdentifier
+  before_action :set_job_application, only: [:edit, :update, :destroy]
 
   def index
     @job_applications = filter_and_sort_job_applications
@@ -22,6 +23,17 @@ class JobApplicationsController < ApplicationController
 
   def new
     @job_application = JobApplication.new
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: @job_application, title: "New"}) }
+    end
+  end
+
+  def edit
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}) }
+    end
   end
 
   def create
@@ -29,18 +41,19 @@ class JobApplicationsController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to job_applications_path, notice: "Job application was successfully created." }
-        format.turbo_stream {
-          flash.now[:notice] = "Job application was successfully created."
-          render turbo_stream: [
-            turbo_stream.prepend("job_applications", partial: "job_application", locals: {job_application: @job_application}),
-            turbo_stream.update("flash_messages", partial: "flash_messages"),
-            turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: JobApplication.new})
-          ]
-        }
+        format.html { redirect_to root_path, success: "Job application was successfully created." }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.redirect_advanced(root_path)
+          flash[:success] = "Job application was successfully created."
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@job_application, partial: "form", locals: {job_application: @job_application}) }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: @job_application, title: "New"}),
+            turbo_stream.update("flash_messages", partial: "flash_messages")
+          ]
+        end
       end
     end
   end
@@ -48,17 +61,13 @@ class JobApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        format.html { redirect_to job_applications_path, notice: "Job application was successfully updated." }
-        format.turbo_stream {
-          flash.now[:notice] = "Job application was successfully updated."
-          render turbo_stream: [
-            turbo_stream.replace(@job_application, partial: "job_application", locals: {job_application: @job_application}),
-            turbo_stream.update("flash_messages", partial: "flash_messages")
-          ]
-        }
+        format.html { redirect_to root_path, success: "Job application was successfully updated." }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.redirect_advanced(root_path)
+          flash[:success] = "Job application was successfully updated."
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@job_application, partial: "form", locals: {job_application: @job_application}) }
       end
     end
   end
@@ -66,9 +75,9 @@ class JobApplicationsController < ApplicationController
   def destroy
     @job_application.destroy
     respond_to do |format|
-      format.html { redirect_to job_applications_url, notice: "Job application was successfully deleted." }
+      format.html { redirect_to root_path, success: "Job application was successfully deleted." }
       format.turbo_stream {
-        flash.now[:notice] = "Job application was successfully deleted."
+        flash.now[:success] = "Job application was successfully deleted."
         render turbo_stream: [
           turbo_stream.remove(@job_application),
           turbo_stream.update("job_application_count", JobApplication.count),
@@ -82,6 +91,8 @@ class JobApplicationsController < ApplicationController
 
   def set_job_application
     @job_application = JobApplication.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Job application not found."
   end
 
   def job_application_params
@@ -97,11 +108,18 @@ class JobApplicationsController < ApplicationController
 
     sort_column = sort_column(params[:sort])
     sort_direction = sort_direction(params[:direction])
-    job_applications.order(sort_column => sort_direction)
+
+    if sort_column == "created_at" || params[:sort].blank?
+      # If sorting by created_at or no sorting specified, always use desc order
+      job_applications.order(created_at: :desc)
+    else
+      # For other columns, use the specified sort direction
+      job_applications.order(sort_column => sort_direction)
+    end
   end
 
   def sort_column(column)
-    %w[date_applied company_name position_title].include?(column) ? column : "date_applied"
+    %w[date_applied company_name position_title created_at].include?(column) ? column : "created_at"
   end
 
   def sort_direction(direction)

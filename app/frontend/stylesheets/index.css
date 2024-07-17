@@ -24,3 +24,11 @@ body {
   background-position: center;
   background-attachment: fixed;
 }
+
+td {
+  font-size: 12px !important;
+}
+
+th {
+  font-size: 12px !important;
+}

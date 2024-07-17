@@ -16,6 +16,7 @@ gem "phlex-rails", "~> 1.2"
 gem "devise", "~> 4.9"
 gem "will_paginate", "~> 4.0"
 gem "validate_url", "~> 1.0"
+gem "rexml", ">= 3.3.2"
 
 group :development, :test do
   gem "debug", "~> 1.9", ">= 1.9.2", platforms: %i[mri windows]
