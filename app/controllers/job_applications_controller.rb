@@ -1,10 +1,11 @@
 class JobApplicationsController < ApplicationController
-  before_action :set_job_application, only: [:edit, :update, :destroy]
+  include ActionView::RecordIdentifier
+  before_action :set_job_application, only: [:update, :destroy]
 
   def index
     @job_applications = filter_and_sort_job_applications
     @job_application_count = @job_applications.count
-    @job_applications = @job_applications.paginate(page: params[:page], per_page: 10).order(created_at: :desc)
+    @job_applications = @job_applications.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
 
     @pagination_info = {
       current_page: @job_applications.current_page,
@@ -29,10 +30,6 @@ class JobApplicationsController < ApplicationController
   end
 
   def edit
-    respond_to do |format|
-      format.html
-      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}) }
-    end
   end
 
   def create
@@ -41,22 +38,18 @@ class JobApplicationsController < ApplicationController
     respond_to do |format|
       if @job_application.save
         format.html { redirect_to root_path, notice: "Job application was successfully created." }
-        format.turbo_stream {
-          flash.now[:notice] = "Job application was successfully created."
-          render turbo_stream: [
-            turbo_stream.prepend("job_applications", partial: "job_application", locals: {job_application: @job_application}),
-            turbo_stream.update("job_application_count", JobApplication.count),
-            turbo_stream.update("flash_messages", partial: "flash_messages")
-          ]
-        }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.redirect_advanced(root_path)
+          flash[:notice] = "Job application was successfully created."
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace("new_job_application", partial: "form", locals: {job_application: @job_application, title: "New"}),
             turbo_stream.update("flash_messages", partial: "flash_messages")
           ]
-        }
+        end
       end
     end
   end
@@ -65,21 +58,12 @@ class JobApplicationsController < ApplicationController
     respond_to do |format|
       if @job_application.update(job_application_params)
         format.html { redirect_to root_path, notice: "Job application was successfully updated." }
-        format.turbo_stream {
-          flash.now[:notice] = "Job application was successfully updated."
-          render turbo_stream: [
-            turbo_stream.replace(@job_application, partial: "job_application", locals: {job_application: @job_application}),
-            turbo_stream.update("flash_messages", partial: "flash_messages")
-          ]
-        }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.redirect_advanced(root_path)
+          flash[:notice] = "Job application was successfully updated."
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: [
-            turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}),
-            turbo_stream.update("flash_messages", partial: "flash_messages")
-          ]
-        }
       end
     end
   end

@@ -11,7 +11,7 @@ export default class extends Controller {
     this.element.classList.remove('hidden');
     setTimeout(() => {
       this.fadeOut();
-    }, 2000); // Start fading out after 4 seconds
+    }, 2000);
   }
 
   fadeOut() {
@@ -20,7 +20,7 @@ export default class extends Controller {
       flashMessage.classList.add('fade-out');
       setTimeout(() => {
         this.element.classList.add('hidden');
-      }, 500); // Duration of fade-out animation
+      }, 500);
     }
   }
 }

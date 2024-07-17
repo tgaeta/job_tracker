@@ -1,5 +1,5 @@
 import "~/controllers";
-import "@hotwired/turbo-rails";
+import { Turbo } from "@hotwired/turbo-rails"
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
 //
@@ -20,7 +20,7 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 Turbo.start();
 
-document.addEventListener("turbo:load", function () {
+document.addEventListener("turbo:load", () => {
   console.log("turbo:load");
 });
 //
@@ -32,3 +32,9 @@ document.addEventListener("turbo:load", function () {
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
+
+Turbo.StreamActions.redirect_advanced = function () {
+  const url = this.getAttribute('url') || '/'
+  // Turbo.visit(url, { frame: '_top', action: 'advance' })
+  Turbo.visit(url)
+}
