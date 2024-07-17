@@ -24,6 +24,8 @@ group :development, :test do
   gem "dotenv", "~> 3.1", ">= 3.1.2"
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.3"
   gem "faker", "~> 3.4"
+  gem "mocha", "~> 1.2", ">= 1.2.1"
+  gem "rails-controller-testing", "~> 0.0.3"
   gem "rubocop-rails-omakase", "~> 1.0", require: false, group: [:development]
   gem "minitest-reporters", "~> 1.6", ">= 1.6.1"
 end

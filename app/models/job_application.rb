@@ -4,7 +4,7 @@ class JobApplication < ApplicationRecord
   validates :date_applied, :company_name, :method_of_contact, :position_type, :position_title, presence: true
   validates :email_address, presence: true, if: -> { method_of_contact == "email" }
   validates :point_of_contact, presence: true, if: -> { ["email", "phone", "recruiter", "other"].include?(method_of_contact) }
-  validates :website_link, presence: true, if: -> { method_of_contact == "internet job application" }
+  validates :website_link, presence: true, if: -> { method_of_contact == "internet_job_application" }
   validates :website_link, url: {
     allow_blank: true,
     schemes: ["http", "https"],

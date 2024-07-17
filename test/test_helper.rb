@@ -2,6 +2,8 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/reporters"
+require "factory_bot_rails"
+require "rails-controller-testing"
 
 reporters = []
 
@@ -17,6 +19,29 @@ else
 end
 Minitest::Reporters.use! reporters
 
+class ActionDispatch::IntegrationTest
+  setup do
+    # Mock Vite helpers
+    ActionView::Base.class_eval do
+      def vite_javascript_tag(*args)
+        ""
+      end
+
+      def vite_client_tag
+        ""
+      end
+
+      def vite_stylesheet_tag(*args)
+        ""
+      end
+
+      def vite_asset_path(*args)
+        ""
+      end
+    end
+  end
+end
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
@@ -26,6 +51,7 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    include FactoryBot::Syntax::Methods
   end
 end
 
