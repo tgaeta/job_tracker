@@ -96,7 +96,7 @@ class JobApplicationsController < ApplicationController
   end
 
   def job_application_params
-    params.require(:job_application).permit(:date_applied, :company_name, :method_of_contact, :email_address, :point_of_contact, :website_link, :position_type, :position_title)
+    params.require(:job_application).permit(:date_applied, :company_name, :method_of_contact, :email_address, :point_of_contact, :website_link, :position_type, :position_title, :claimed_for_unemployment, :status)
   end
 
   def filter_and_sort_job_applications
@@ -105,6 +105,9 @@ class JobApplicationsController < ApplicationController
     job_applications = job_applications.search(params[:search]) if params[:search].present?
     job_applications = job_applications.by_method_of_contact(params[:method_of_contact]) if params[:method_of_contact].present?
     job_applications = job_applications.by_position_type(params[:position_type]) if params[:position_type].present?
+    job_applications = job_applications.claimed_for_unemployment if params[:claimed_for_unemployment] == "true"
+    job_applications = job_applications.not_claimed_for_unemployment if params[:claimed_for_unemployment] == "false"
+    job_applications = job_applications.by_status(params[:status]) if params[:status].present?
 
     sort_column = sort_column(params[:sort])
     sort_direction = sort_direction(params[:direction])
@@ -119,7 +122,7 @@ class JobApplicationsController < ApplicationController
   end
 
   def sort_column(column)
-    %w[date_applied company_name position_title created_at].include?(column) ? column : "created_at"
+    %w[date_applied company_name position_title created_at claimed_for_unemployment status].include?(column) ? column : "created_at"
   end
 
   def sort_direction(direction)

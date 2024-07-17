@@ -44,11 +44,21 @@
             </div>
             <div>
               <%= form.label :position_type, class: 'block text-sm font-medium text-gray-700 mb-2' %>
-              <%= form.select :position_type, JobApplication.position_types.keys.map { |k| [k.humanize, k] }, { include_blank: 'Select a type' }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+              <%= form.select :position_type, JobApplication.position_types.keys.map { |k| [display_position_type(k), k] }, { include_blank: 'Select a type' }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
             </div>
             <div>
               <%= form.label :position_title, class: 'block text-sm font-medium text-gray-700 mb-2' %>
               <%= form.text_field :position_title, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+            </div>
+            <div>
+              <%= form.label :status, class: 'block text-sm font-medium text-gray-700 mb-2' %>
+              <%= form.select :status, JobApplication.statuses.keys.map { |k| [k.humanize, k] }, { include_blank: 'Select a status' }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+              <div class="mt-8">
+                <%= form.label :claimed_for_unemployment, class: 'flex items-center' do %>
+                  <%= form.check_box :claimed_for_unemployment, class: 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-2' %>
+                  <span class="text-sm font-medium text-gray-700">Claimed for Unemployment</span>
+                <% end %>
+              </div>
             </div>
           </div>
           <div class="flex items-center justify-end mt-6">

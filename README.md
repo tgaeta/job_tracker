@@ -20,7 +20,7 @@
 
 Job Tracker is a simple, powerful, and user-friendly web application designed to help job seekers efficiently manage their job search process. Built with Ruby on Rails and enhanced with modern web technologies, this tool streamlines the often overwhelming task of tracking multiple job applications.
 
-<img alt="UI Screenshot" src="https://github.com/user-attachments/assets/ab65ca79-4530-4730-b6b3-d839cfdf6398"/>
+<img alt="UI Screenshot" src="https://github.com/user-attachments/assets/8153c979-2bc9-437b-965d-c838506d5036"/>
 
 ## Key Features
 

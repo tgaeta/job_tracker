@@ -32,14 +32,31 @@ module ApplicationHelper
   end
 
   def sort_link_to(name, column)
-    direction = (column.to_s == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
-    link_to name,
-      request.params.merge(sort: column, direction: direction),
-      class: "text-gray-600 hover:text-gray-900",
+    current_column = params[:sort]
+    current_direction = params[:direction]
+
+    is_current_column = column.to_s == current_column
+    next_direction = (is_current_column && current_direction == "asc") ? "desc" : "asc"
+
+    icon = if is_current_column
+      (current_direction == "asc") ? "↑" : "↓"
+    else
+      ""
+    end
+
+    link_to request.params.merge(sort: column, direction: next_direction),
+      class: "text-gray-600 hover:text-gray-900 inline-flex items-center",
       data: {
         turbo_frame: "job_applications_table",
         turbo_action: "replace"
-      }
+      } do
+      content_tag(:span, class: "flex items-center") do
+        safe_join([
+          content_tag(:span, name, class: "mr-1"),
+          content_tag(:span, icon, class: "sort-icon")
+        ])
+      end
+    end
   end
 
   def safe_url(url)
