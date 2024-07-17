@@ -4,9 +4,17 @@
   </div>
   <div class="my-2 md:my-8">
     <div class="mb-8 flex justify-between items-center">
-      <h2 class="hidden md:block md:text-2xl font-semibold text-gray-700 shadow-2xl">
-        Job Tracker
-      </h2>
+      <div class="flex items-center">
+        <%= image_tag(asset_path('apple-touch-icon.png'),
+      height: '32',
+      width: '32',
+      class: "rounded-full object-cover shadow-sm border-2 border-gray-200 mr-2",
+      aria: { label: "Job Tracker logo" },
+      title: "Job Tracker logo") %>
+        <h2 class="hidden md:block md:text-2xl font-semibold text-gray-700 shadow-2xl">
+          Job Tracker
+        </h2>
+      </div>
       <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
     </div>
     <%= form_with url: job_applications_path, method: :get, data: { controller: "job-filter", turbo_frame: "job_applications_table" } do |form| %>

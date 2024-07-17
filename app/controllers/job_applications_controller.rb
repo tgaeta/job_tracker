@@ -5,7 +5,7 @@ class JobApplicationsController < ApplicationController
   def index
     @job_applications = filter_and_sort_job_applications
     @job_application_count = @job_applications.count
-    @job_applications = @job_applications.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+    @job_applications = @job_applications.paginate(page: params[:page], per_page: 10)
 
     @pagination_info = {
       current_page: @job_applications.current_page,
@@ -108,11 +108,18 @@ class JobApplicationsController < ApplicationController
 
     sort_column = sort_column(params[:sort])
     sort_direction = sort_direction(params[:direction])
-    job_applications.order(sort_column => sort_direction)
+
+    if sort_column == "created_at" || params[:sort].blank?
+      # If sorting by created_at or no sorting specified, always use desc order
+      job_applications.order(created_at: :desc)
+    else
+      # For other columns, use the specified sort direction
+      job_applications.order(sort_column => sort_direction)
+    end
   end
 
   def sort_column(column)
-    %w[date_applied company_name position_title].include?(column) ? column : "date_applied"
+    %w[date_applied company_name position_title created_at].include?(column) ? column : "created_at"
   end
 
   def sort_direction(direction)
