@@ -22,21 +22,5 @@ FactoryBot.define do
     trait :hired do
       status { "hired" }
     end
-
-    factory :job_application_phone do
-      method_of_contact { "phone" }
-    end
-
-    factory :job_application_unique do
-      company_name { "Unique Company" }
-    end
-
-    factory :job_application_jan_2 do
-      date_applied { Date.new(2023, 1, 2) }
-    end
-
-    factory :job_application_jan_1 do
-      date_applied { Date.new(2023, 1, 1) }
-    end
   end
 end

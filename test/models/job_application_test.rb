@@ -6,7 +6,7 @@ class JobApplicationTest < ActiveSupport::TestCase
   end
 
   test "valid job application" do
-    assert @job_application.valid?
+    assert @job_application.valid?, "Job application is not valid. Errors: #{@job_application.errors.full_messages}"
   end
 
   test "invalid without date_applied" do
@@ -77,39 +77,62 @@ class JobApplicationTest < ActiveSupport::TestCase
   end
 
   test "by_method_of_contact scope" do
+    JobApplication.destroy_all
     create(:job_application, method_of_contact: "email")
     create(:job_application, :with_website)
+
+    puts "Total job applications: #{JobApplication.count}"
+    puts "Email job applications: #{JobApplication.by_method_of_contact("email").count}"
+    puts "Internet job applications: #{JobApplication.by_method_of_contact("internet_job_application").count}"
 
     assert_equal 1, JobApplication.by_method_of_contact("email").count
     assert_equal 1, JobApplication.by_method_of_contact("internet_job_application").count
   end
 
   test "by_position_type scope" do
+    JobApplication.destroy_all
     create(:job_application, position_type: "full_time")
     create(:job_application, position_type: "part_time")
+
+    puts "Total job applications: #{JobApplication.count}"
+    puts "Full-time job applications: #{JobApplication.by_position_type("full_time").count}"
+    puts "Part-time job applications: #{JobApplication.by_position_type("part_time").count}"
 
     assert_equal 1, JobApplication.by_position_type("full_time").count
     assert_equal 1, JobApplication.by_position_type("part_time").count
   end
 
   test "by_status scope" do
+    JobApplication.destroy_all
     create(:job_application, status: "interviewing")
-    create(:job_application, :hired)
+    create(:job_application, status: "hired")
+
+    puts "Total job applications: #{JobApplication.count}"
+    puts "Interviewing job applications: #{JobApplication.by_status("interviewing").count}"
+    puts "Hired job applications: #{JobApplication.by_status("hired").count}"
 
     assert_equal 1, JobApplication.by_status("interviewing").count
     assert_equal 1, JobApplication.by_status("hired").count
   end
 
   test "claimed_for_unemployment scope" do
-    create(:job_application, :claimed)
-    create(:job_application)
+    JobApplication.destroy_all
+    create(:job_application, claimed_for_unemployment: true)
+    create(:job_application, claimed_for_unemployment: false)
+
+    puts "Total job applications: #{JobApplication.count}"
+    puts "Claimed for unemployment: #{JobApplication.claimed_for_unemployment.count}"
 
     assert_equal 1, JobApplication.claimed_for_unemployment.count
   end
 
   test "not_claimed_for_unemployment scope" do
-    create(:job_application, :claimed)
-    create(:job_application)
+    JobApplication.destroy_all
+    create(:job_application, claimed_for_unemployment: true)
+    create(:job_application, claimed_for_unemployment: false)
+
+    puts "Total job applications: #{JobApplication.count}"
+    puts "Not claimed for unemployment: #{JobApplication.not_claimed_for_unemployment.count}"
 
     assert_equal 1, JobApplication.not_claimed_for_unemployment.count
   end

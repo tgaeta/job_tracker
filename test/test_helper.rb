@@ -4,6 +4,7 @@ require "rails/test_help"
 require "minitest/reporters"
 require "factory_bot_rails"
 require "rails-controller-testing"
+require "database_cleaner/active_record"
 
 reporters = []
 
@@ -52,6 +53,16 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
     include FactoryBot::Syntax::Methods
+
+    DatabaseCleaner.strategy = :transaction
+
+    setup do
+      DatabaseCleaner.start
+    end
+
+    teardown do
+      DatabaseCleaner.clean
+    end
   end
 end
 
