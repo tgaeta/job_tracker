@@ -1,3 +1,4 @@
+ENV["BT_TEST_FORMAT"] ||= "dots"
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
