@@ -14,6 +14,7 @@ JobApplication.destroy_all
     point_of_contact: Faker::Name.name,
     position_type: %w[full_time part_time internship].sample,
     position_title: Faker::Job.title,
-    website_link: website_link
+    website_link: website_link,
+    claimed_for_unemployment: [true, false].sample
   )
 end

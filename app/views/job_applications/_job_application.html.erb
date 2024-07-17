@@ -1,4 +1,4 @@
-<tr id="<%= dom_id(job_application) %>">
+<tr class="h-20" id="<%= dom_id(job_application) %>">
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <%= job_application.date_applied.strftime('%m/%d/%Y') %>
   </td>
@@ -9,16 +9,19 @@
     <%= job_application.position_title %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= job_application.position_type.humanize %>
+    <%= display_position_type(job_application.position_type) %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <%= job_application.method_of_contact.humanize %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= job_application.point_of_contact || '-' %>
+    <%= job_application.point_of_contact.present? ? job_application.point_of_contact : '-' %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <%= job_application.email_address.present? ? job_application.email_address : '-' %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.claimed_for_unemployment ? '✔︎' : '-' %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <% if job_application.website_link.present? %>

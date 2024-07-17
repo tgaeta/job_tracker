@@ -1,19 +1,17 @@
-<div class="fixed bottom-0 left-0 w-full z-50">
-  <% if @pagination_info[:total_pages] > 1 %>
-    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 shadow appearance-none rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-      <div class="text-sm text-gray-700">
-      </div>
-      <div>
-        <%= will_paginate @job_applications,
-                                renderer: CustomPaginationRenderer,
-                                previous_label: 'Previous',
-                                next_label: 'Next',
-                                inner_window: 0,
-                                outer_window: 0,
-                                class: 'pagination',
-                                previous_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50',
-                                next_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50' %>
-      </div>
+<% if @pagination_info[:total_pages] > 1 %>
+  <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    <div class="text-sm text-gray-700">
     </div>
-  <% end %>
-</div>
+    <div>
+      <%= will_paginate @job_applications,
+                              renderer: CustomPaginationRenderer,
+                              previous_label: 'Previous',
+                              next_label: 'Next',
+                              inner_window: 0,
+                              outer_window: 0,
+                              class: 'pagination',
+                              previous_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50',
+                              next_page_class: 'px-3 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50' %>
+    </div>
+  </div>
+<% end %>

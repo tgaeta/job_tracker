@@ -9,10 +9,18 @@ class JobApplication < ApplicationRecord
     no_local: true,
     public_suffix: true
   }
+  validates :claimed_for_unemployment, inclusion: {in: [true, false]}
+
   enum method_of_contact: {email: "email", phone: "phone", internet_job_application: "internet job application", recruiter: "recruiter", other: "other"}
-  enum position_type: {full_time: "full-time", part_time: "part-time", internship: "internship"}
+  enum position_type: {
+    full_time: "full_time",
+    part_time: "part_time",
+    internship: "internship"
+  }
 
   scope :search, ->(query) { where("company_name ILIKE ? OR position_title ILIKE ?", "%#{query}%", "%#{query}%") }
   scope :by_method_of_contact, ->(method) { where(method_of_contact: method) }
   scope :by_position_type, ->(type) { where(position_type: type) }
+  scope :claimed_for_unemployment, -> { where(claimed_for_unemployment: true) }
+  scope :not_claimed_for_unemployment, -> { where(claimed_for_unemployment: false) }
 end

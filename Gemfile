@@ -19,6 +19,7 @@ gem "validate_url", "~> 1.0"
 gem "rexml", ">= 3.3.2"
 
 group :development, :test do
+  gem "byebug", "~> 11.1", ">= 11.1.3"
   gem "debug", "~> 1.9", ">= 1.9.2", platforms: %i[mri windows]
   gem "dotenv", "~> 3.1", ">= 3.1.2"
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.3"
