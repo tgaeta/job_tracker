@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_162540) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_175130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_162540) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "claimed_for_unemployment", default: false, null: false
+    t.string "status", default: "no response", null: false
+    t.check_constraint "status::text = ANY (ARRAY['interviewing'::character varying, 'no response'::character varying, 'hired'::character varying, 'not hired'::character varying, 'job offer'::character varying]::text[])", name: "check_valid_status"
   end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

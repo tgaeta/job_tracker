@@ -24,6 +24,9 @@
     <%= job_application.claimed_for_unemployment ? '✔︎' : '-' %>
   </td>
   <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <%= job_application.status.humanize %>
+  </td>
+  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <% if job_application.website_link.present? %>
       <%= link_to 'Visit',
           safe_url(job_application.website_link),

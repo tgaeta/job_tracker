@@ -15,6 +15,7 @@ JobApplication.destroy_all
     position_type: %w[full_time part_time internship].sample,
     position_title: Faker::Job.title,
     website_link: website_link,
-    claimed_for_unemployment: [true, false].sample
+    claimed_for_unemployment: [true, false].sample,
+    status: %w[interviewing no_response not_hired job_offer].sample
   )
 end
