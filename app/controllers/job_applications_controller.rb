@@ -1,6 +1,6 @@
 class JobApplicationsController < ApplicationController
   include ActionView::RecordIdentifier
-  before_action :set_job_application, only: [:update, :destroy]
+  before_action :set_job_application, only: [:edit, :update, :destroy]
 
   def index
     @job_applications = filter_and_sort_job_applications
@@ -30,6 +30,10 @@ class JobApplicationsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@job_application), partial: "form", locals: {job_application: @job_application, title: "Edit"}) }
+    end
   end
 
   def create
@@ -37,10 +41,10 @@ class JobApplicationsController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to root_path, notice: "Job application was successfully created." }
+        format.html { redirect_to root_path, success: "Job application was successfully created." }
         format.turbo_stream do
           render turbo_stream: turbo_stream.redirect_advanced(root_path)
-          flash[:notice] = "Job application was successfully created."
+          flash[:success] = "Job application was successfully created."
         end
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -57,10 +61,10 @@ class JobApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        format.html { redirect_to root_path, notice: "Job application was successfully updated." }
+        format.html { redirect_to root_path, success: "Job application was successfully updated." }
         format.turbo_stream do
           render turbo_stream: turbo_stream.redirect_advanced(root_path)
-          flash[:notice] = "Job application was successfully updated."
+          flash[:success] = "Job application was successfully updated."
         end
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -71,9 +75,9 @@ class JobApplicationsController < ApplicationController
   def destroy
     @job_application.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Job application was successfully deleted." }
+      format.html { redirect_to root_path, success: "Job application was successfully deleted." }
       format.turbo_stream {
-        flash.now[:notice] = "Job application was successfully deleted."
+        flash.now[:success] = "Job application was successfully deleted."
         render turbo_stream: [
           turbo_stream.remove(@job_application),
           turbo_stream.update("job_application_count", JobApplication.count),
