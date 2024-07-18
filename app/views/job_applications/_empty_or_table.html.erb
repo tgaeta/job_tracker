@@ -1,0 +1,16 @@
+<% if @job_applications.any? %>
+  <div class="mb-8 flex justify-end">
+    <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
+  </div>
+  <%= form_with url: job_applications_path, method: :get, data: { controller: "job-filter", turbo_frame: "job_applications_table" } do |form| %>
+    <!-- Your existing filter form code here -->
+  <% end %>
+  <%= turbo_frame_tag "job_applications_table" do %>
+    <%= render partial: "job_applications_table", locals: { job_applications: @job_applications } %>
+    <div id="pagination" class="mt-4">
+      <%= render partial: "pagination", locals: { job_applications: @job_applications, job_application_count: @job_application_count } %>
+    </div>
+  <% end %>
+<% else %>
+  <%= render 'empty_state' %>
+<% end %>

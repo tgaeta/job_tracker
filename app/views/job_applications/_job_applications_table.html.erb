@@ -54,6 +54,10 @@
         <p class="mt-1 text-sm text-gray-500">
           <%= "No results match your search criteria." if params[:search].present? || params[:method_of_contact].present? || params[:position_type].present? %>
         </p>
+        <p class="mt-1 mb-4 text-sm text-gray-500">
+          <%= "No job applications. Add your first job application now" if job_applications.blank? %>
+        </p>
+        <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white mt-4 font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
       </div>
     <% end %>
   </div>

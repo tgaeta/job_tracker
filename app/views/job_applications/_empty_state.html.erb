@@ -1,0 +1,8 @@
+<div class="text-center py-10 border-dashed border-2 border-gray-300 rounded-lg">
+  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+    <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+  </svg>
+  <h2 class="mt-2 text-base font-semibold text-gray-900">No job applications</h2>
+  <p class="mt-1 mb-8 text-sm text-gray-500">Get started by creating a new job application.</p>
+  <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
+</div>
