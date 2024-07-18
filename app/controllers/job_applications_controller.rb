@@ -78,10 +78,21 @@ class JobApplicationsController < ApplicationController
       format.html { redirect_to root_path, success: "Job application was successfully deleted." }
       format.turbo_stream {
         flash.now[:success] = "Job application was successfully deleted."
+
+        # Reapply filters, sorting, and pagination
+        @job_applications = filter_and_sort_job_applications
+        @job_applications = @job_applications.paginate(page: params[:page], per_page: 10)
+
+        @pagination_info = {
+          total_pages: @job_applications.total_pages,
+          current_page: @job_applications.current_page,
+          total_entries: @job_applications.total_entries
+        }
+
         render turbo_stream: [
-          turbo_stream.remove(@job_application),
-          turbo_stream.update("job_application_count", JobApplication.count),
-          turbo_stream.update("flash_messages", partial: "flash_messages")
+          turbo_stream.update("flash_messages", partial: "flash_messages"),
+          turbo_stream.update("job_applications_content", partial: "empty_or_table"),
+          turbo_stream.update("job_application_count", JobApplication.count)
         ]
       }
     end
