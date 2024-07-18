@@ -1,7 +1,7 @@
 require "faker"
 
 JobApplication.destroy_all
-50.times do
+20.times do
   method_of_contact = %w[email internet_job_application recruiter].sample
   email_address = (method_of_contact == "email") ? Faker::Internet.email : nil
   website_link = (method_of_contact == "internet_job_application") ? "https://example.com/" : nil
@@ -16,6 +16,7 @@ JobApplication.destroy_all
     position_title: Faker::Job.title,
     website_link: website_link,
     claimed_for_unemployment: [true, false].sample,
-    status: %w[interviewing no_response not_hired job_offer].sample
+    status: %w[interviewing no_response not_hired job_offer].sample,
+    location: %w[remote in_office hybrid].sample
   )
 end

@@ -1,5 +1,6 @@
 class JobApplication < ApplicationRecord
   attribute :status, :string
+  attribute :location, :string
 
   validates :date_applied, :company_name, :method_of_contact, :position_type, :position_title, presence: true
   validates :email_address, presence: true, if: -> { method_of_contact == "email" }
@@ -13,6 +14,7 @@ class JobApplication < ApplicationRecord
   }
   validates :claimed_for_unemployment, inclusion: {in: [true, false]}
   validates :status, inclusion: {in: %w[hired interviewing job_offer no_response not_hired]}
+  validates :location, inclusion: {in: %w[hybrid in_office remote]}
 
   enum method_of_contact: {
     email: "email",
@@ -33,7 +35,13 @@ class JobApplication < ApplicationRecord
     no_response: "no response",
     not_hired: "not hired"
   }
+  enum location: {
+    hybrid: "hybrid",
+    in_office: "in office",
+    remote: "remote"
+  }
 
+  scope :by_location, ->(location) { where(location: location) }
   scope :by_method_of_contact, ->(method) { where(method_of_contact: method) }
   scope :by_position_type, ->(type) { where(position_type: type) }
   scope :by_status, ->(status) { where(status: status) }
@@ -45,6 +53,7 @@ class JobApplication < ApplicationRecord
            email_address ILIKE :query OR
            point_of_contact ILIKE :query OR
            website_link ILIKE :query OR
+           location ILIKE :query OR
            status ILIKE :query", query: "%#{query}%")
   }
 end

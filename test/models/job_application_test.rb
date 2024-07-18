@@ -60,6 +60,12 @@ class JobApplicationTest < ActiveSupport::TestCase
     assert_not_nil @job_application.errors[:website_link]
   end
 
+  test "job application validates location inclusion" do
+    assert_raises(ArgumentError) do
+      build(:job_application, location: "invalid_location")
+    end
+  end
+
   test "job application validates status inclusion" do
     assert_raises(ArgumentError) do
       build(:job_application, status: "invalid_status")
@@ -82,6 +88,15 @@ class JobApplicationTest < ActiveSupport::TestCase
 
     assert_equal 1, JobApplication.by_method_of_contact("email").count
     assert_equal 1, JobApplication.by_method_of_contact("internet_job_application").count
+  end
+
+  test "by_location scope finds job applications by location" do
+    JobApplication.destroy_all
+    create(:job_application, location: "remote")
+    create(:job_application, location: "in_office")
+
+    assert_equal 1, JobApplication.by_location("remote").count
+    assert_equal 1, JobApplication.by_location("in_office").count
   end
 
   test "by_position_type scope finds job applications by position_type" do
