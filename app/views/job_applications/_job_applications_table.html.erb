@@ -52,12 +52,8 @@
           <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
         </svg>
         <p class="mt-1 text-sm text-gray-500">
-          <%= "No results match your search criteria." if params[:search].present? || params[:method_of_contact].present? || params[:position_type].present? %>
+          No results match your search criteria.
         </p>
-        <p class="mt-1 mb-4 text-sm text-gray-500">
-          <%= "No job applications. Add your first job application now" if job_applications.blank? %>
-        </p>
-        <%= link_to 'New Job Application', new_job_application_path, class: 'text-sm bg-blue-600 hover:bg-blue-700 text-white mt-4 font-bold py-2 px-4 rounded cursor-pointer', data: { turbo_frame: "_top" } %>
       </div>
     <% end %>
   </div>
