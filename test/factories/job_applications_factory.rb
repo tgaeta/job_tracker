@@ -1,14 +1,15 @@
 FactoryBot.define do
   factory :job_application do
-    date_applied { Date.new(2023, 1, 1) }
-    company_name { "Example Company" }
-    method_of_contact { "email" }
-    position_type { "full_time" }
-    position_title { "Software Engineer" }
     claimed_for_unemployment { false }
-    status { "interviewing" }
+    company_name { "Example Company" }
+    date_applied { Date.new(2023, 1, 1) }
     email_address { "example@example.com" }
+    location { "remote" }
+    method_of_contact { "email" }
     point_of_contact { "John Doe" }
+    position_title { "Software Engineer" }
+    position_type { "full_time" }
+    status { "interviewing" }
 
     trait :with_website do
       method_of_contact { "internet_job_application" }
