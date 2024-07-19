@@ -33,7 +33,7 @@
   <td class="px-5 py-5 text-center">
     <%= location_emoji_with_tooltip(job_application.location) %>
   </td>
-  <td class="px-5 py-5 item">
+  <td class="px-5 py-5">
     <% if job_application.website_link.present? %>
       <%= link_to 'Visit',
           safe_url(job_application.website_link),
