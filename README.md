@@ -20,15 +20,15 @@
 
 Job Tracker is a simple, powerful, and user-friendly web application designed to help job seekers efficiently manage their job search process. Built with Ruby on Rails and enhanced with modern web technologies, this tool streamlines the often overwhelming task of tracking multiple job applications.
 
-<img alt="UI Screenshot" src="https://github.com/user-attachments/assets/8153c979-2bc9-437b-965d-c838506d5036"/>
+<img alt="UI Screenshot" src="https://github.com/user-attachments/assets/09f11ccf-e266-457f-bac6-f2b4183f1377"/>
 
 ## Key Features
 
 - **Intuitive Interface**: Easy-to-use dashboard for quick overview of all job applications.
 - **Detailed Tracking**: Record essential information for each application, including:
-  - Applied
-  - Company
-  - Position
+  - Applied On Date
+  - Company Name
+  - Position Title
   - Postion Type (Full-time, Part-time, Internship)
   - Contact Method
   - Point of Contact (P.o.C.)
@@ -63,7 +63,13 @@ Refer [here](./docs/installing_prerequisites.md) to install these dependencies
 
 ### Running the application
 
-Start your application
+Run `bin/setup` to set up the application. It prepares the database and installs the required ruby gems and javascript packages. The script is idempotent, so you can run it multiple times.
+
+```bash
+./bin/setup
+```
+
+Start Job Tracker
 
 ```bash
 ./bin/dev

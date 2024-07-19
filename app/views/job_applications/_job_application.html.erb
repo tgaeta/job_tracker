@@ -1,35 +1,39 @@
-<tr class="h-20" id="<%= dom_id(job_application) %>">
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<tr class="h-20 border-b border-gray-200 bg-white text-sm" id="<%= dom_id(job_application) %>">
+  <td class="px-5 py-5">
     <%= job_application.date_applied.strftime('%m/%d/%Y') %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5">
     <%= job_application.company_name %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5">
     <%= job_application.position_title %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= display_position_type(job_application.position_type) %>
+  <td class="px-2 py-3 w-24">
+    <div class="<%= position_type_chip_classes(job_application.position_type) %>">
+      <%= display_position_type(job_application.position_type) %>
+    </div>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= job_application.method_of_contact.humanize %>
+  <td class="px-5 py-5 text-center">
+    <%= method_of_contact_emoji_with_tooltip(job_application.method_of_contact) %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5">
     <%= job_application.point_of_contact.present? ? job_application.point_of_contact : '-' %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5">
     <%= job_application.email_address.present? ? job_application.email_address : '-' %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5 ">
     <%= job_application.claimed_for_unemployment ? '✔︎' : '-' %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= job_application.status.humanize %>
+  <td class="px-2 py-3 w-24">
+    <div class="<%= status_chip_classes(job_application.status) %>">
+      <%= job_application.status.humanize %>
+    </div>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-    <%= job_application.location.humanize %>
+  <td class="px-5 py-5 text-center">
+    <%= location_emoji_with_tooltip(job_application.location) %>
   </td>
-  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td class="px-5 py-5">
     <% if job_application.website_link.present? %>
       <%= link_to 'Visit',
           safe_url(job_application.website_link),
