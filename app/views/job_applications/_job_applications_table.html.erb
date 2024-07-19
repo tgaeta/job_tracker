@@ -4,8 +4,8 @@
       <table class="w-full">
         <thead class="text-xs bg-gray-100 text-left font-semibold text-gray-600 w-8 border-b-2">
           <tr>
-            <th class="px-5 py-3 w-8">
-              <%= sort_link_to 'Applied', 'date_applied' %>
+            <th class="px-5 py-3 w-36">
+              <%= sort_link_to 'Applied On', 'date_applied' %>
             </th>
             <th class="px-5 py-3 w-48">
               <%= sort_link_to 'Company', 'company_name' %>
@@ -28,7 +28,7 @@
             <th class="px-5 py-3">
               <%= sort_link_to 'Claimed', 'claimed_for_unemployment' %>
             </th>
-            <th class="px-5 py-3">
+            <th class="px-2 py-3 w-32">
               <%= sort_link_to 'Status', 'status' %>
             </th>
             <th class="px-5 py-3">
