@@ -34,6 +34,8 @@ Job Tracker is a simple, powerful, and user-friendly web application designed to
   - Point of Contact (P.o.C.)
   - Email
   - Website
+  - Status (No response, Interviewing, Job offer, Hired, Not hired)
+  - Location (Hybrid, Remote, In office)
 - **Dynamic Filtering**: Quickly find specific applications using search and filter options.
 - **Real-time Updates**: Leveraging Hotwire for seamless, dynamic content updates without full page reloads.
 - **Responsive Design**: Fully functional on both desktop and mobile devices.
